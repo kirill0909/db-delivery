@@ -9,10 +9,8 @@ import (
 )
 
 type Config struct {
-	Postgres    Postgres
-	TgBot       TgBot
-	AdminChatID int64
-	RabbitMQ    RabbitMQ
+	Postgres Postgres
+	RabbitMQ RabbitMQ
 }
 
 type Postgres struct {
@@ -22,11 +20,6 @@ type Postgres struct {
 	Password string `validate:"required"`
 	DBName   string `validate:"required"`
 	SSLMode  string `validate:"required"`
-}
-
-type TgBot struct {
-	ApiKey string `validate:"required"`
-	Prefix string `validate:"required"`
 }
 
 type RabbitMQ struct {
