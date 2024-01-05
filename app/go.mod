@@ -6,6 +6,7 @@ require (
 	github.com/go-playground/validator/v10 v10.16.0
 	github.com/jackc/pgx/v4 v4.18.1
 	github.com/jmoiron/sqlx v1.3.5
+	github.com/kirill0909/logger v0.0.0-20240105095309-2f5ceaeaa2f7
 	github.com/pkg/errors v0.9.1
 	github.com/rabbitmq/amqp091-go v1.9.0
 	github.com/spf13/viper v1.18.2

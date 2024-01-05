@@ -2,8 +2,8 @@ package models
 
 import (
 	bot "db-delivery/internal/models/bot"
-	"db-delivery/pkg/logger"
 	"github.com/jmoiron/sqlx"
+	"github.com/kirill0909/logger"
 )
 
 type Dependencies struct {

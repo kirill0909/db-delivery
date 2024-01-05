@@ -5,8 +5,8 @@ import (
 	"db-delivery/config"
 	"db-delivery/internal/bot"
 	models "db-delivery/internal/models/bot"
-	"db-delivery/pkg/logger"
 	"encoding/json"
+	"github.com/kirill0909/logger"
 	"github.com/pkg/errors"
 	amqp "github.com/rabbitmq/amqp091-go"
 )
