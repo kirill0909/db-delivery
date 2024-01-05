@@ -1,11 +1,14 @@
 package usecase
 
 import (
+	"context"
 	"db-delivery/config"
 	"db-delivery/internal/bot"
 	models "db-delivery/internal/models/bot"
 	"db-delivery/pkg/logger"
-	// amqp "github.com/rabbitmq/amqp091-go"
+	"encoding/json"
+	"github.com/pkg/errors"
+	amqp "github.com/rabbitmq/amqp091-go"
 )
 
 type BotUC struct {
@@ -34,8 +37,25 @@ func (u *BotUC) Consume() error {
 		select {
 		case msg, ok := <-u.rabbitMQ.Chans.UserActivationChan:
 			if ok {
-				u.log.Infof("Message: %s", string(msg.Body))
+				if err := u.handleUserActivationCase(msg); err != nil {
+					u.log.Errorf(err.Error())
+				}
 			}
 		}
 	}
+}
+
+func (u *BotUC) handleUserActivationCase(msg amqp.Delivery) error {
+	u.log.Infof("read message: (%+v) from queue(%s)", string(msg.Body), u.cfg.RabbitMQ.Queues.UserActivationQueue)
+	var userActivationParams models.UserActivationParams
+	if err := json.Unmarshal(msg.Body, &userActivationParams); err != nil {
+		return errors.Wrapf(err, "BotUC.handleUserActivationCase.Unmrashal. param(%+v)", string(msg.Body))
+	}
+
+	ctx := context.Background()
+	if err := u.pgRepo.UserActivation(ctx, userActivationParams); err != nil {
+		return err
+	}
+
+	return nil
 }

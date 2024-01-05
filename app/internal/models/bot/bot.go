@@ -13,3 +13,9 @@ type RabbitMQ struct {
 type Chans struct {
 	UserActivationChan <-chan amqp.Delivery
 }
+
+type UserActivationParams struct {
+	TgName string
+	ChatID int64
+	UUID   string
+}
